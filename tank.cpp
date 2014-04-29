@@ -5,10 +5,8 @@
 
 #define T .1
 #define X 5
-#define Y 3
 
 struct TCoordenadas{
-
     double x;
     double y;
 };
@@ -21,10 +19,19 @@ struct TFisica{
 };
 
 struct TTanque{
-    struct TCoordenadas posicion;
-    int dimension[X][Y];
+    struct TCoordenadas dimension[X];
 };
 
+void rellenar_tanque(struct TTanque *tanque){
+
+    for(int fila=0; fila < X; fila++){
+	   tanque->dimension[fila].x = 10 + fila;
+	   tanque->dimension[fila].y = 3 + fila;
+    }
+
+    mvprintw(tanque->dimension[fila].x, tanque->dimension[fila].y, "1");
+
+}
 
 int main(int argc, char *argv[]){
 
@@ -44,18 +51,10 @@ int main(int argc, char *argv[]){
     disparo.aceleracion.x =   0;
     disparo.aceleracion.y = -10;
 
-    tanque.dimension[X][Y].posicion.x = 0;
-    tanque.dimension[X][Y].posicion.y = 0;
-
-    for(int fila=0; fila < Y; fila++)
-	for(int columna=0; columna < X; columna++)
-	    tanque.dimension[fila][columna] = "+";
+    rellenar_tanque(&tanque);
 
     initscr();
     curs_set(0);
-
-
-						    
 
     do{
 
@@ -66,8 +65,6 @@ int main(int argc, char *argv[]){
 	disparo.punto.y += disparo.velocidad.y * T;
 
 	mvprintw(20 - disparo.punto.y, disparo.punto.x, "*");
-
-	printw(20 - tanque.posicion.y, tanque.posicion.x);
 
 	refresh();
 
