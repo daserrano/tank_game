@@ -30,34 +30,23 @@ void rellenar_tanque(struct TTanque *tanque){
     }
 
 }
-void pintar_tanque(struct TTanque *tanque){
-    
 
+void pintar_tanque(struct TTanque *tanque){
 
     attron(COLOR_PAIR(1));
     for(int fila=0; fila < X; fila++)
 	mvprintw(tanque->dimension[fila].y, tanque->dimension[fila].x, "@");
 
     attroff(COLOR_PAIR(1));
-
     }
-
-
 
     int main(int argc, char *argv[]){
 
 	struct TFisica disparo;
 	struct TTanque tanque;
 
-	printf("Introduce velocidad:\nx: ");
-	__fpurge(stdin);
-	scanf(" %lf", &disparo.velocidad.x);
-	printf("y: ");
-	__fpurge(stdin);
-	scanf(" %lf", &disparo.velocidad.y);
-
 	disparo.punto.x = 30;
-	disparo.punto.y = 0;
+	disparo.punto.y =  0;
 
 	disparo.aceleracion.x =   0;
 	disparo.aceleracion.y = -10;
@@ -78,10 +67,17 @@ void pintar_tanque(struct TTanque *tanque){
 	    disparo.punto.x += disparo.velocidad.x * T;
 	    disparo.punto.y += disparo.velocidad.y * T;
 
-	    mvprintw(20 - disparo.punto.y, disparo.punto.x, "*");
-
 	    pintar_tanque(&tanque);
 
+	    mvprintw(25,0, "Introduce velocidad:\nx: ");
+
+	    __fpurge(stdin);
+	    scanw(" %lf", &disparo.velocidad.x);
+	    printw("y: ");
+	    __fpurge(stdin);
+	    scanw(" %lf", &disparo.velocidad.y);
+
+	    mvprintw(20 - disparo.punto.y, disparo.punto.x, "*");
 
 	    refresh();
 
