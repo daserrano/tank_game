@@ -59,6 +59,15 @@ void pintar_tanque(struct TTanque *tanque){
 
 	init_pair(1, COLOR_GREEN, COLOR_BLACK);
 
+	pintar_tanque(&tanque);
+
+	mvprintw(25,0, "Introduce velocidad:\nx: ");
+	__fpurge(stdin);
+	scanw(" %lf", &disparo.velocidad.x);
+	printw("y: ");
+	__fpurge(stdin);
+	scanw(" %lf", &disparo.velocidad.y);
+
 	do{
 
 	    disparo.velocidad.x += disparo.aceleracion.x * T;
@@ -67,15 +76,7 @@ void pintar_tanque(struct TTanque *tanque){
 	    disparo.punto.x += disparo.velocidad.x * T;
 	    disparo.punto.y += disparo.velocidad.y * T;
 
-	    pintar_tanque(&tanque);
 
-	    mvprintw(25,0, "Introduce velocidad:\nx: ");
-
-	    __fpurge(stdin);
-	    scanw(" %lf", &disparo.velocidad.x);
-	    printw("y: ");
-	    __fpurge(stdin);
-	    scanw(" %lf", &disparo.velocidad.y);
 
 	    mvprintw(20 - disparo.punto.y, disparo.punto.x, "*");
 
