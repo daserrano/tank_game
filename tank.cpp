@@ -7,8 +7,8 @@
 #define X 5
 
 struct TCoordenadas{
-    double x;
-    double y;
+double x;
+double y;
 };
 
 struct TFisica{
@@ -25,53 +25,70 @@ struct TTanque{
 void rellenar_tanque(struct TTanque *tanque){
 
     for(int fila=0; fila < X; fila++){
-	   tanque->dimension[fila].x = 10 + fila;
-	   tanque->dimension[fila].y = 3 + fila;
+	   tanque->dimension[fila].y = 20;
+	   tanque->dimension[fila].x = 27 + fila;
     }
 
-    mvprintw(tanque->dimension[fila].x, tanque->dimension[fila].y, "1");
-
 }
+void pintar_tanque(struct TTanque *tanque){
+    
 
-int main(int argc, char *argv[]){
 
-    struct TFisica disparo;
-    struct TTanque tanque;
+    attron(COLOR_PAIR(1));
+    for(int fila=0; fila < X; fila++)
+	mvprintw(tanque->dimension[fila].y, tanque->dimension[fila].x, "@");
 
-    printf("Introduce velocidad:\nx: ");
-    __fpurge(stdin);
-    scanf(" %lf", &disparo.velocidad.x);
-    printf("y: ");
-    __fpurge(stdin);
-    scanf(" %lf", &disparo.velocidad.y);
+    attroff(COLOR_PAIR(1));
 
-    disparo.punto.x = 40;
-    disparo.punto.y = 0;
+    }
 
-    disparo.aceleracion.x =   0;
-    disparo.aceleracion.y = -10;
 
-    rellenar_tanque(&tanque);
 
-    initscr();
-    curs_set(0);
+    int main(int argc, char *argv[]){
 
-    do{
+	struct TFisica disparo;
+	struct TTanque tanque;
 
-	disparo.velocidad.x += disparo.aceleracion.x * T;
-	disparo.velocidad.y += disparo.aceleracion.y * T;
+	printf("Introduce velocidad:\nx: ");
+	__fpurge(stdin);
+	scanf(" %lf", &disparo.velocidad.x);
+	printf("y: ");
+	__fpurge(stdin);
+	scanf(" %lf", &disparo.velocidad.y);
 
-	disparo.punto.x += disparo.velocidad.x * T;
-	disparo.punto.y += disparo.velocidad.y * T;
+	disparo.punto.x = 30;
+	disparo.punto.y = 0;
 
-	mvprintw(20 - disparo.punto.y, disparo.punto.x, "*");
+	disparo.aceleracion.x =   0;
+	disparo.aceleracion.y = -10;
 
-	refresh();
+	rellenar_tanque(&tanque);
 
-    }while(disparo.punto.y >= 0);
+	initscr();
+	curs_set(0);
+	start_color();
 
-    getch();
-    endwin();
+	init_pair(1, COLOR_GREEN, COLOR_BLACK);
 
-    return EXIT_SUCCESS;
-}
+	do{
+
+	    disparo.velocidad.x += disparo.aceleracion.x * T;
+	    disparo.velocidad.y += disparo.aceleracion.y * T;
+
+	    disparo.punto.x += disparo.velocidad.x * T;
+	    disparo.punto.y += disparo.velocidad.y * T;
+
+	    mvprintw(20 - disparo.punto.y, disparo.punto.x, "*");
+
+	    pintar_tanque(&tanque);
+
+
+	    refresh();
+
+	}while(disparo.punto.y >= 0);
+
+	getch();
+	endwin();
+
+	return EXIT_SUCCESS;
+    }
